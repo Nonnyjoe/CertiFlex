@@ -5,7 +5,7 @@ import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 
 import { Container } from '../components/Container';
-import { ClassAttributes, Fragment, JSX, SVGProps, HTMLAttributes, useEffect, useRef } from 'react';
+import { ClassAttributes, Fragment, JSX, SVGProps, HTMLAttributes, useEffect, useRef, JSXElementConstructor, ReactNode, HTMLProps, RefObject, CSSProperties, MutableRefObject, StyleHTMLAttributes } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 function CloseIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
@@ -38,7 +38,7 @@ function ChevronDownIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement
 }
 
 
-function MobileNavItem({ href, children }) {
+function MobileNavItem({ href, children }: {href: string, children: ReactNode}) {
     return (
         <li>
             <Popover.Button as={Link} href={href} className="block py-2">
@@ -48,7 +48,7 @@ function MobileNavItem({ href, children }) {
     );
 }
 
-function MobileNavigation(props) {
+function MobileNavigation(props: HTMLAttributes<HTMLElement> ) {
     return (
         <Popover {...props}>
             <Popover.Button className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur ">
@@ -104,7 +104,7 @@ function MobileNavigation(props) {
     );
 }
 
-function NavItem({ href, children }) {
+function NavItem({ href, children }: { href: string, children: ReactNode; }) {
     let isActive = useRouter().pathname === href;
 
     return (
@@ -148,31 +148,20 @@ function clamp(number: number, a: number, b: number) {
     return Math.min(Math.max(number, min), max);
 }
 
-function AvatarContainer({ className, ...props }) {
-    return (
-        <div
-            className={clsx(
-                className,
-                'h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur '
-            )}
-            {...props}
-        />
-    );
-}
 
 
 export function Header() {
     let isHomePage = useRouter().pathname === '/';
 
-    let headerRef = useRef();
-    let avatarRef = useRef();
-    let isInitial = useRef(true);
+    let headerRef: MutableRefObject<HTMLDivElement | null | undefined> = useRef();
+    let avatarRef: MutableRefObject<HTMLDivElement | null | undefined> = useRef();
+    let isInitial: MutableRefObject<boolean> = useRef(true);
 
     useEffect(() => {
         let downDelay = avatarRef.current?.offsetTop ?? 0;
         let upDelay = 64;
 
-        function setProperty(property: string, value: string | number | null) {
+        function setProperty(property: string, value: string | null) {
             document.documentElement.style.setProperty(property, value);
         }
 
@@ -181,7 +170,10 @@ export function Header() {
         }
 
         function updateHeaderStyles() {
-            let { top, height } = headerRef.current.getBoundingClientRect();
+            let rect = headerRef.current?.getBoundingClientRect();
+            let top = rect?.top;
+            let height = rect?.height;
+
             let scrollY = clamp(
                 window.scrollY,
                 0,
@@ -193,6 +185,8 @@ export function Header() {
             }
 
             setProperty('--content-offset', `${downDelay}px`);
+
+            if (top && height)
 
             if (isInitial.current || scrollY < downDelay) {
                 setProperty('--header-height', `${downDelay + height}px`);
@@ -228,7 +222,7 @@ export function Header() {
         window.addEventListener('resize', updateStyles);
 
         return () => {
-            window.removeEventListener('scroll', updateStyles, { passive: true });
+            window.removeEventListener('scroll', updateStyles);
             window.removeEventListener('resize', updateStyles);
         };
     }, [isHomePage]);
@@ -245,25 +239,25 @@ export function Header() {
                 {isHomePage && (
                     <>
                         <div
-                            ref={avatarRef}
+                            ref={avatarRef as unknown as RefObject<HTMLDivElement>}
                             className="order-last mt-[calc(theme(spacing.16)-theme(spacing.3))]"
                         />
                         <Container
                             className="top-0 order-last -mb-3 pt-3"
-                            style={{ position: 'var(--header-position)' }}
+                            style={{ position: 'var(--header-position)' as any }}
                         >
                             <div
                                 className="top-[var(--avatar-top,theme(spacing.3))] w-full"
-                                style={{ position: 'var(--header-inner-position)' }}
+                                style={{ position: 'var(--header-inner-position)' as any }}
                             >
                                 <div className="relative">
-                                    <AvatarContainer
+                                    {/* <AvatarContainer
                                         className="absolute left-0 top-3 origin-left transition-opacity"
                                         style={{
                                             opacity: 'var(--avatar-border-opacity, 0)',
                                             transform: 'var(--avatar-border-transform)',
                                         }}
-                                    />
+                                    /> */}
                                     {/* <Avatar
                                         large
                                         className="block h-16 w-16 origin-left"
@@ -275,21 +269,16 @@ export function Header() {
                     </>
                 )}
                 <div
-                    ref={headerRef}
+                    ref={headerRef as unknown as RefObject<HTMLDivElement>}
                     className="top-0 z-10 h-16 pt-6"
-                    style={{ position: 'var(--header-position)' }}
+                    style={{ position: 'var(--header-position)' as any}}
                 >
                     <Container
                         className="top-[var(--header-top,theme(spacing.6))] w-full"
-                        style={{ position: 'var(--header-inner-position)' }}
+                        style={{ position: 'var(--header-inner-position)' } as unknown as CSSProperties}
                     >
                         <div className="relative flex gap-4">
                             <div className="flex flex-1">
-                                {!isHomePage && (
-                                    <AvatarContainer>
-                                        {/* <Avatar /> */}
-                                    </AvatarContainer>
-                                )}
                             </div>
                             <div className="flex flex-1 justify-end md:justify-center">
                                 <MobileNavigation className="pointer-events-auto md:hidden" />
