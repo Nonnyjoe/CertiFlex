@@ -1,0 +1,24 @@
+{
+  "name": "ayathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd FrontEnd && npm run dev",
+    "build": "cd FrontEnd && npm run build",
+    "start": "cd FrontEnd && npm run btart",
+    "lint": "cd FrontEnd && npm run bint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nonnyjoe/Ayathon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nonnyjoe/Ayathon/issues"
+  },
+  "homepage": "https://github.com/Nonnyjoe/Ayathon#readme"
+}
