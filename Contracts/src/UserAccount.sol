@@ -77,6 +77,12 @@ contract UserAccount {
         emit Revoke(account, Evidence[account].certificateId);
         return true;
     }
+
+    function verifyCertificate(bytes memory encodedCert) external view returns (receipientDetails memory){
+        (address decodedAddress, ) = abi.decode(encodedCert, (address, string));
+        return Evidence[decodedAddress];
+
+    }
     function TransferOwnership(address _newOwner) external onlyOwner{
         owner = _newOwner;
     }

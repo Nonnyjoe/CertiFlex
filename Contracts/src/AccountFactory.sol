@@ -18,6 +18,7 @@ contract AccountFactory {
     mapping(address => uint) ChildId;
     mapping(address => bytes[]) userCertificates;
     mapping(bytes => address) certificateIssuer;
+    mapping(address => mapping(address => bool)) certificateRevoked;
     uint certificateIDs;
     address public NftAddress;
 
@@ -51,7 +52,18 @@ contract AccountFactory {
         certificateIssuer[evidencePointer] = msg.sender;
     }
 
-    function revokeCert(address account) public onlyChild {}
+    function revokeCert(address account) public onlyChild {
+        certificateRevoked[msg.sender][account] = true;
+    }
+
+    function getAllCertificates(address account) external view returns (bytes[] memory){
+        require(account != address(0), "ADDRESS ZERO");
+        return userCertificates[account];
+    }
+
+    function verifyCertificates1(bytes memory certificateHash) external view returns (address) {
+        return certificateIssuer[certificateHash];
+    }
 
     function pause() external{
         require(msg.sender == owner, 'Not authorized');
