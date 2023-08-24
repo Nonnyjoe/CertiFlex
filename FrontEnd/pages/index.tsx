@@ -2,6 +2,8 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Hero } from '../components/Hero';
+import { Features } from '../components/Features';
+import { Header } from '../components/Header';
 
 const Home: NextPage = () => {
   return (
@@ -14,8 +16,10 @@ const Home: NextPage = () => {
         />
         <link href="/favicon.ico" rel="icon" />
       </Head>
+      <Header />
       <main>
         <Hero />
+        <Features />
       </main>
     </div>
   );

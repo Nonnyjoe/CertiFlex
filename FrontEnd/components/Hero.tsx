@@ -26,7 +26,7 @@ export function Hero() {
                 Experience the seamless power of blockchain technology with CertiChain - the ultimate platform for creating, verifying, and trusting digital certificates. Say goodbye to paper-based certificates that are easily lost or tampered with. With CertiChain, your credentials are securely stored on the blockchain, ensuring their authenticity for a lifetime.
             </p>
             <div className="mt-10 flex justify-center space-x-6">
-                <ButtonLink href="/register">Create certificate</ButtonLink>
+                <ButtonLink href="/create">Create certificate</ButtonLink>
                 <ButtonLink
                     href="https://youtu.be/XxSID43ElUQ"
                     variant="outline"
