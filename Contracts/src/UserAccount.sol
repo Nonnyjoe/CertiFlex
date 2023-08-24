@@ -66,12 +66,12 @@ contract UserAccount {
         issued[userAddr] = true;
         uint256 certID = ICert(NFTaddress).safeMint(userAddr, uri);
         Evidence[userAddr] = receipientDetails(UserName, userAddr, certID, uri, block.timestamp);
-        bytes memory evidencePointer = abi.encodePacked(userAddr, uri);
-        Ifactory(factory).registerCert(userAddr, evidencePointer);
+        bytes memory evidencePointer = abi.encode(userAddr, uri);
+        Ifactory(factory).registerStudents(userAddr, evidencePointer);
     }
 
     function RevokeCertificate(address account) external onlyOwner returns (bool){
-        ICert(NFTaddress).Burn(Evidence[account].certificateId);
+        ICert(NFTaddress).burn(Evidence[account].certificateId);
         Evidence[account] = receipientDetails("REVOKED", address(0), 0 ,"revoked", block.timestamp);
         Ifactory(factory).revokeCert(account);
         emit Revoke(account, Evidence[account].certificateId);

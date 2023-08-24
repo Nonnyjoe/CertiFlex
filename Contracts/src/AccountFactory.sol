@@ -20,13 +20,12 @@ contract AccountFactory {
     mapping(bytes => address) certificateIssuer;
     mapping(address => mapping(address => bool)) certificateRevoked;
     uint certificateIDs;
-    address public NftAddress;
+
 
     event accountCreated(string _name, address _accountAddress, uint certID);
-    constructor(address _nftAddress) {
+    constructor() {
         owner = msg.sender;
         certificateIDs = 1;
-        NftAddress = _nftAddress;
     }
 
     modifier onlyChild() {
@@ -34,7 +33,7 @@ contract AccountFactory {
         _;
     }
 
-    function CreateAccount(string memory name_, string memory certSymbol_, uint _duration) external {
+    function CreateAccount(string memory name_, string memory certSymbol_, uint _duration) external returns(address child){
         require(paused == false, 'Paused');
         require(accountStatus[msg.sender] == false, 'existing account');
         certificateIDs++;
@@ -44,6 +43,7 @@ contract AccountFactory {
         accountStatus[msg.sender] = true;
         contractAccountStatus[address(account)] = true;
         ChildId[address(account)] = certificateIDs;
+        child = address(account);
         emit accountCreated(name_,address(account), certificateIDs);
     }
 

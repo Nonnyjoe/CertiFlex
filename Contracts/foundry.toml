@@ -2,5 +2,13 @@
 src = "src/Contracts"
 out = "out"
 libs = ["lib"]
+verbosity = 5
+fs_permissions = [{ access = "read-write", path = "./"}]
+
+[rpc_endpoints]
+sepolia = "${SEPOLIA_RPC}"
+
+[etherscan]
+sepolia = { key = "${ETHER_SCAN}" }
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
