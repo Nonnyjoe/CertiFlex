@@ -8,13 +8,12 @@ import React, { useEffect, useState } from 'react';
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "./ui/card"
 import { clsx } from 'clsx';
 import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { Button } from './ui/button';
 
 
 export function VerifyCertificate() {
@@ -91,66 +90,30 @@ export function VerifyCertificate() {
         setAddr(address || "");
         // setAllYourCert(yourCert);
         
-    }, [addr, yourCert])
+    }, [addr, address, yourCert])
 
 
     return (
-        <Container className="pt-20 pb-16 text-center lg:pt-32">
-            <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
-                Verify the authenticity of any certificate
-            </h1>
+        <Container className={clsx("pt-20 pb-16 lg:pt-32")}>
+            <form className={clsx("flex flex-col gap-8 mt-4 px-8 py-8 m-auto bg-zinc-50 shadow-2xl shadow-zinc-200 rounded-lg ring-1 ring-zinc-200 lg:max-w-2xl")}>
+                <h2 className="mx-auto max-w-4xl font-display text-4xl font-medium tracking-tight text-slate-900 ">
+                    Verify certificate form
+                </h2>
 
 
-            <div className='flex flex-col gap-3'>
-                <p>Verify certificate form</p>
-                <label htmlFor="cert_Hash">Certificate Hash
-                    <input type="text" className='border rounded-sm' name="cert_Hash" id="" onChange={(e) => {setCertHash(e.target.value)}}/>
-                </label>
-                <button type="submit" onClick={verifyByHash}>Verify Certificate</button>
-            </div>
+                <div className='flex flex-col gap-2'>
+                    <label htmlFor="cert_hash">Certificate Hash</label>
+                    <input
+                        type="text"
+                        name="cert_hash"
+                        id=""
+                        onChange={(e) => { setCertHash(e.target.value); }}
+                        className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50'
+                    />
+                </div>
+                <Button type="submit" onClick={CreateCert}>Verify Certificate</Button>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-                These are the lists of certificates you can verify
-            </p>
-
-            <div className={clsx('mx-auto mt-6 max-w-2xl ', 'flex flex-wrap gap-6')}>
-                <Card
-                    className={clsx('')}
-                > 
-                    <CardContent>
-                    </CardContent>
-                    <CardTitle>Hello</CardTitle>
-                    <CardHeader>Certificate of Award</CardHeader>
-                </Card>
-                <Card> 
-                    <CardContent>
-                    </CardContent>
-                    <CardHeader>Certificate of Award</CardHeader>
-                </Card>
-                <Card> 
-                    <CardContent>
-                    </CardContent>
-                    <CardHeader>Certificate of Award</CardHeader>
-                </Card>
-
-            </div>
-
-            <div className="mt-10 flex justify-center space-x-6">
-                <ButtonLink href="/create">Create new certificate</ButtonLink>
-                <ButtonLink
-                    href="https://youtu.be/XxSID43ElUQ"
-                    variant="outline"
-                >
-                    <svg
-                        aria-hidden="true"
-                        className="h-3 w-3 flex-none fill-blue-600 group-active:fill-current"
-                    >
-                        <path d="m9.997 6.91-7.583 3.447A1 1 0 0 1 1 9.447V2.553a1 1 0 0 1 1.414-.91L9.997 5.09c.782.355.782 1.465 0 1.82Z" />
-                    </svg>
-                    <span className="ml-3">Watch Demo</span>
-                </ButtonLink>
-            </div>
-
+                </form>
         </Container>
     );
 }
