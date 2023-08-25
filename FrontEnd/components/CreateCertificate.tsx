@@ -68,7 +68,7 @@ export function CreateCertificate() {
                             name="cert_name"
                             id=""
                             onChange={(e) => { setCertName(e.target.value); }}
-                            className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50 z-50'
+                            className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50'
                         />
                     </div>
                     <div className='flex flex-col gap-2'>
@@ -78,7 +78,7 @@ export function CreateCertificate() {
                             name="cert_symbol"
                             id=""
                             onChange={(e) => { setCertSymbol(e.target.value); }}
-                            className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50 z-50'
+                            className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50 '
                         />
                     </div>
                     <div className='flex flex-col gap-2'>
@@ -88,7 +88,7 @@ export function CreateCertificate() {
                             name="duration"
                             id=""
                             onChange={(e) => { setDuration(Number(e.target.value)); }}
-                            className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50 z-50'
+                            className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50 '
                         />
                     </div>
                 </div>
