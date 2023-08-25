@@ -12,6 +12,8 @@ CertiFlex is a secure on-chain certificate issuance and verification Dapp hosted
 Create a Certification account by inputting the name of the certificate, Symbol for the certificate NFT, and finally duration of the program.
 <br/>
 <a href="https://ibb.co/vcpRHvj"><img src="https://i.ibb.co/GdyN035/create-certificate.png" alt="create-certificate" border="0" /></a>
+<br/>
+<a href="https://ibb.co/DVkv5WD"><img src="https://i.ibb.co/C1vYh85/issue-cert.png" alt="issue-cert" border="0" /></a>
 
 ### Step 2.
 #### Issue out certificates
