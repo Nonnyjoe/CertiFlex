@@ -63,7 +63,7 @@ export function IssueCertificate() {
         setConnectedAddr(address || "");
         setSingleAccount(certAddr || "");
         
-    }, [connectedAddr])
+    }, [address, connectedAddr])
 
 
     return (
@@ -94,30 +94,6 @@ export function IssueCertificate() {
             <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
                 These are the lists of certificates you&apos;ve created
             </p>
-
-            <div className={clsx('mx-auto mt-6 max-w-2xl ', 'flex flex-wrap gap-6')}>
-                <Card
-                    className={clsx('')}
-                > 
-                    <CardContent>
-                    </CardContent>
-                    <CardTitle>Ayathon Participation</CardTitle>
-                    <CardHeader>Certificate of Participation</CardHeader>
-                </Card>
-                <Card> 
-                    <CardContent>
-                    </CardContent>
-                    <CardTitle>Ayathon Winner</CardTitle>
-                    <CardHeader>Certificate of Award</CardHeader>
-                </Card>
-                <Card> 
-                    <CardContent>
-                    </CardContent>
-                    <CardHeader>Certificate of Award</CardHeader>
-                </Card>
-                
-
-            </div>
 
             <div className="mt-10 flex justify-center space-x-6">
                 <ButtonLink href="/create">Create new certificate</ButtonLink>
