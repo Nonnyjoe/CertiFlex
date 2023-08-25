@@ -111,7 +111,7 @@ export function VerifyCertificate() {
                         className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50'
                     />
                 </div>
-                <Button type="submit" onClick={CreateCert}>Verify Certificate</Button>
+                <Button type="button" onClick={(e) =>{e.preventDefault; verifyByHash}}>Verify Certificate</Button>
 
                 </form>
         </Container>
