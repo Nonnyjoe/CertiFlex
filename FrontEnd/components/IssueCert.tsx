@@ -2,7 +2,9 @@ import Image from 'next/image';
 import { ButtonLink } from '../components/Button';
 import { Container } from '../components/Container';
 import child_abi from '../utils/child_abi.json';
-// import factory_address from '../utils/factory_address';
+import factory_abi from '../utils/factory_abi.json';
+import factory_address from '../utils/factory_address';
+import main from '../utils/ipfs.mjs';
 import {shortenHex} from "../utils/ShortenHex";
 
 import React, { useEffect, useState } from 'react';
@@ -24,19 +26,23 @@ export function IssueCertificate() {
     const [userAddress, setUserAddress] = useState('');
     const [certURI, setCertURI] = useState('');
     const [singleAccount, setSingleAccount] = useState("");
+    const [certImage, setCertImage] = useState();
     const [connectedAddr, setConnectedAddr] = useState("");
 
 
     const {address} = useAccount();
 
 
-    const IssueCert = () => {
+    const IssueCert = async () => {
         console.log("creating cert")
+        const result = await main(userName, userAddress, certImage);
+        setCertURI(result.url)
+        console.log(certURI);
         issueCertWrite?.();
     }
 
     const {config: IssueCertConfig} = usePrepareContractWrite({
-        address: '0x00',
+        address: singleAccount,
         abi: child_abi,
         functionName: "issueCertificate",
         args: [userName, userAddress, certURI],
@@ -45,16 +51,17 @@ export function IssueCertificate() {
     const {data: issueCertData, isLoading: issueCertIsLoading, isError: issueCertIsError, write: issueCertWrite} = useContractWrite(IssueCertConfig)
 
 
-    // const {data: yourAccount, isLoading: yourCertIsLoading, isError: yourCertIsError} = useContractRead({
-    //     address: factory_address,
-    //     abi: factory_abi,
-    //     functionName: "SingleAccount",
-    //     args: [addr ?? "0x00"],
-    // })
+    const {data: certAddr, isLoading: yourCertIsLoading, isError: yourCertIsError} = useContractRead({
+        address: factory_address,
+        abi: factory_abi,
+        functionName: "SingleAccount",
+        args: [connectedAddr ?? "0x00"],
+    })
 
     useEffect(() => {
 
         setConnectedAddr(address || "");
+        setSingleAccount(certAddr || "");
         
     }, [connectedAddr])
 
@@ -73,8 +80,13 @@ export function IssueCertificate() {
                 <label htmlFor="userAddress">User Address
                     <input type="text" className='border rounded-sm' name="userAddress" id="" onChange={(e) => {setUserAddress(e.target.value)}} />
                 </label>
-                <label htmlFor="certURI">Certificate URI
-                    <input type="text" className='border rounded-sm' name="certURI" id="" onChange={(e) => {setCertURI(e.target.value)}}/>
+                <label>
+                    Certificate Image
+                    <input
+                        className="py-2 px-2 border border-blue-950 rounded-lg w-full mb-2"
+                        type="file"
+                        onChange={(e) => setCertImage(e.target.files[0])}
+                    />
                 </label>
                 <button type="submit" onClick={IssueCert}>Issue Certificate</button>
             </div>

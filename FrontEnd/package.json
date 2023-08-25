@@ -40,6 +40,7 @@
     "date-fns": "^2.30.0",
     "lucide-react": "^0.268.0",
     "next": "^13.4.3",
+    "nft.storage": "^7.1.1",
     "react": "^18.2.0",
     "react-day-picker": "^8.8.1",
     "react-dom": "^18.2.0",
