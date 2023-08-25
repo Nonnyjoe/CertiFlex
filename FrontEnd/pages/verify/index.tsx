@@ -18,7 +18,6 @@ const Home: NextPage = () => {
             </Head>
             <main>
                 <Header />
-                {/* <Hero /> */}
                 <VerifyCertificate />
             </main>
         </div>

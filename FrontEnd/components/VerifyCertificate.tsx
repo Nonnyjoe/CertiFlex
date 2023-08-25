@@ -4,7 +4,7 @@ import { Container } from '../components/Container';
 import factory_abi from '../utils/factory_abi.json';
 import factory_address from '../utils/factory_address';
 import child_abi from '../utils/child_abi.json';
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import {
     Card,
     CardContent,
@@ -12,7 +12,7 @@ import {
     CardTitle,
 } from "./ui/card"
 import { clsx } from 'clsx';
-import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { type  Address, useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { Button } from './ui/button';
 
 
@@ -28,6 +28,16 @@ export function VerifyCertificate() {
     const [certUri, setcertUri] = useState("");
     const [certIssuedTime, setcertIssuedTime] = useState("");
 
+    const [verifiedCertificateData, setVerifiedCertificateData] = useState<VerifiedCertificateDetails>();
+
+    type VerifiedCertificateDetails = 
+    { 
+        Name: string, 
+        addr: Address, 
+        certificateId: 0n, 
+        certificateUri: string, 
+        issuedTime: number; 
+    }
 
 
     const {address} = useAccount();
@@ -65,6 +75,8 @@ export function VerifyCertificate() {
             setChildAddr(data);
         },
     })
+
+
     const {data: certificateData, isLoading: certificateDataIsLoading, isError: certificateDataIsError} = useContractRead({
         address: childAddr ? childAddr : " ",
         abi: child_abi,
@@ -72,8 +84,8 @@ export function VerifyCertificate() {
         watch: true,
         args: [certHash],
         onSuccess(data) {
+            setVerifiedCertificateData(data as VerifiedCertificateDetails);
             console.log('Success', certificateData)
-
         },
     })
 
@@ -114,6 +126,30 @@ export function VerifyCertificate() {
                 <Button type="button" onClick={(e) =>{e.preventDefault; verifyByHash}}>Verify Certificate</Button>
 
                 </form>
+
+                {verifiedCertificateData && 
+                <div className={clsx("flex flex-wrap")}>
+                    <div>
+                        {verifiedCertificateData.Name}
+                    </div>
+                    <div>
+
+                    {verifiedCertificateData.addr}
+                    </div>
+                    <div>
+
+                    {verifiedCertificateData.certificateId.toString()}
+                    </div>
+                    <div>
+
+                    {verifiedCertificateData.certificateUri}
+                    </div>
+                    <div>
+                        
+                    </div>
+                    {verifiedCertificateData.issuedTime}
+                </div>
+                }
         </Container>
     );
 }
