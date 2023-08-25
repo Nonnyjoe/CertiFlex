@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Button } from '../components/ui/Button';
 import { Container } from '../components/Container';
 import factory_abi from '../utils/factory_abi.json';
 import factory_address from '../utils/factory_address';
@@ -8,6 +7,7 @@ import { shortenHex } from "../utils/ShortenHex";
 import React, { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { Button } from './ui/button';
 
 
 export function CreateCertificate() {
