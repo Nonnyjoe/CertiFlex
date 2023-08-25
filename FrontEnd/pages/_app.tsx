@@ -14,6 +14,7 @@ import {
   baseGoerli
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import { ChakraProvider } from '@chakra-ui/react'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -30,8 +31,8 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: 'RainbowKit App',
-  projectId: 'YOUR_PROJECT_ID',
+  appName: 'CertiFlex',
+  projectId: '4c0ff852eb2c84659a24b7d7c8335bc1',
   chains,
 });
 
@@ -46,7 +47,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
+      <ChakraProvider> 
         <Component {...pageProps} />
+      </ChakraProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
