@@ -3,7 +3,6 @@ import { ButtonLink } from '../components/Button';
 import { Container } from '../components/Container';
 import factory_abi from '../utils/factory_abi.json';
 import factory_address from '../utils/factory_address';
-import {shortenHex} from "../utils/ShortenHex";
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -18,11 +17,9 @@ import { clsx } from 'clsx';
 import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 
-export function CreateCertificate() {
+export function VerifyCertificate() {
 
-    const [certName, setCertName] = useState('');
-    const [certSymbol, setCertSymbol] = useState('');
-    const [duration, setDuration] = useState(0);
+    const [certName, setCertHash] = useState('');
     const [allYourCert, setAllYourCert] = useState("");
     const [addr, setAddr] = useState("");
 
@@ -39,7 +36,7 @@ export function CreateCertificate() {
         address: factory_address,
         abi: factory_abi,
         functionName: "CreateAccount",
-        args: [certName, certSymbol, duration],
+        args: [certName],
     })
 
     const {data: createCertData, isLoading: createCertIsLoading, isError: createCertIsError, write: createCertWrite} = useContractWrite(CreateCertConfig)
@@ -63,25 +60,20 @@ export function CreateCertificate() {
     return (
         <Container className="pt-20 pb-16 text-center lg:pt-32">
             <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
-                Welcome, {shortenHex(addr, 10)}
+                Verify the authenticity of any certificate
             </h1>
 
+
             <div className='flex flex-col gap-3'>
-                <p>Create certificate form</p>
-                <label htmlFor="cert_name">Certificate Name
-                    <input type="text" className='border rounded-sm' name="cert_name" id="" onChange={(e) => {setCertName(e.target.value)}}/>
+                <p>Verify certificate form</p>
+                <label htmlFor="cert_name">Certificate Hash
+                    <input type="text" className='border rounded-sm' name="cert_name" id="" onChange={(e) => {setCertHash(e.target.value)}}/>
                 </label>
-                <label htmlFor="cert_symbol">Certificate Symbol
-                    <input type="text" className='border rounded-sm' name="cert_symbol" id="" onChange={(e) => {setCertSymbol(e.target.value)}} />
-                </label>
-                <label htmlFor="duration">Duration
-                    <input type="number" className='border rounded-sm' name="duration" id="" onChange={(e) => {setDuration(Number(e.target.value))}}/>
-                </label>
-                <button type="submit" onClick={CreateCert}>Create Certificate</button>
+                <button type="submit" onClick={CreateCert}>Verify Certificate</button>
             </div>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-                These are the lists of certificates you&apos;ve created
+                These are the lists of certificates you can verify
             </p>
 
             <div className={clsx('mx-auto mt-6 max-w-2xl ', 'flex flex-wrap gap-6')}>
@@ -90,13 +82,7 @@ export function CreateCertificate() {
                 > 
                     <CardContent>
                     </CardContent>
-                    <CardTitle>Ayathon Participation</CardTitle>
-                    <CardHeader>Certificate of Participation</CardHeader>
-                </Card>
-                <Card> 
-                    <CardContent>
-                    </CardContent>
-                    <CardTitle>Ayathon Winner</CardTitle>
+                    <CardTitle>Hello</CardTitle>
                     <CardHeader>Certificate of Award</CardHeader>
                 </Card>
                 <Card> 
@@ -104,7 +90,11 @@ export function CreateCertificate() {
                     </CardContent>
                     <CardHeader>Certificate of Award</CardHeader>
                 </Card>
-                
+                <Card> 
+                    <CardContent>
+                    </CardContent>
+                    <CardHeader>Certificate of Award</CardHeader>
+                </Card>
 
             </div>
 
