@@ -114,13 +114,13 @@ function NavItem({ href, children }: { href: string, children: ReactNode; }) {
                 className={clsx(
                     'relative block px-3 py-2 transition',
                     isActive
-                        ? 'text-blue-500 '
+                        ? 'text-blue-700 '
                         : 'hover:text-blue-500 '
                 )}
             >
                 {children}
                 {isActive && (
-                    <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-blue-500/0 via-blue-500/40 to-blue-500/0" />
+                    <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-blue-700/0 via-blue-700/40 to-blue-700/0" />
                 )}
             </Link>
         </li>
