@@ -6,6 +6,7 @@ import "../src/AccountFactory.sol";
 
 contract deployScript is Script {
     AccountFactory public factory;
+    address child;
 
     function setUp() public {}
 
@@ -14,6 +15,6 @@ contract deployScript is Script {
         // uint256 deployerPrivateKey2 = vm.envUint("PRIVATE_KEY2");
         vm.startBroadcast(deployerPrivateKey);
         factory = new AccountFactory();   
-
+        child = factory.CreateAccount("Expert Solidity", "EXPSC", 12);
     }
 }
