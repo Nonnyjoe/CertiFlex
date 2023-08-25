@@ -17,7 +17,7 @@ Create a Certification account by inputting the name of the certificate, Symbol 
 #### Issue out certificates
 Issue certificates to users by Uploading the Image of the certificate NFT then inputting the Name and contract address of the receiver.
 <br/>
-<a href="https://ibb.co/vcpRHvj"><img src="https://i.ibb.co/GdyN035/create-certificate.png" alt="create-certificate" border="0" /></a>
+<a href="https://ibb.co/DVkv5WD"><img src="https://i.ibb.co/C1vYh85/issue-cert.png" alt="issue-cert" border="0" /></a>
 
 ### Step 3.
 #### Verify certificates
