@@ -5,6 +5,7 @@ import { Hero } from '../../components/Hero';
 import { Header } from '../../components/Header';
 import { VerifyCertificate } from '../../components/VerifyCertificate';
 
+
 const Home: NextPage = () => {
     return (
         <div>

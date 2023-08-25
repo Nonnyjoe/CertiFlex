@@ -14,9 +14,15 @@ import {
 import { clsx } from 'clsx';
 import { type  Address, useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { Button } from './ui/button';
+import { useDisclosure } from '@chakra-ui/react'
+import Verified from '../pages/verify/components/Verified';
+import ErrorDialog from '../pages/verify/components/Error';
 
 
 export function VerifyCertificate() {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [verifiedStatus, setVerifiedStatus] = useState(false);
+    const [ErrorStatus, setErrorStatus] = useState(false);
 
     const [certHash, setCertHash] = useState('');
     const [allYourCert, setAllYourCert] = useState("");
@@ -60,9 +66,11 @@ export function VerifyCertificate() {
     // INTEGRATION TO VERIFY A CERTIFICATE USING A CERT HASH
     // it first maes a call to get the address of the company that issued the cert
     // then another call verifies the hash from the company address
-    let verifyByHash = () => {
+    const verifyByHash = () => {
         console.log("Verifying cert by hash")
-
+        // setVerifiedStatus(true)
+        // setErrorStatus(true)
+       
     }
     const {data: getCompanyData, isLoading: getCompanyDataIsLoading, isError: getCompanyDataIsError} = useContractRead({
         address: factory_address,
@@ -107,6 +115,8 @@ export function VerifyCertificate() {
 
     return (
         <Container className={clsx("pt-20 pb-16 lg:pt-32")}>
+            {verifiedStatus && <Verified open={isOpen} close={onClose} />}
+            {ErrorStatus && <ErrorDialog open={isOpen} close={onClose} />}
             <form className={clsx("flex flex-col gap-8 mt-4 px-8 py-8 m-auto bg-zinc-50 shadow-2xl shadow-zinc-200 rounded-lg ring-1 ring-zinc-200 lg:max-w-2xl")}>
                 <h2 className="mx-auto max-w-4xl font-display text-4xl font-medium tracking-tight text-slate-900 ">
                     Verify certificate form
@@ -123,7 +133,7 @@ export function VerifyCertificate() {
                         className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50'
                     />
                 </div>
-                <Button type="button" onClick={(e) =>{e.preventDefault; verifyByHash}}>Verify Certificate</Button>
+                <Button type="button" onClick={(e) =>{e.preventDefault; verifyByHash;  onOpen(); setVerifiedStatus(true)}}>Verify Certificate</Button>
 
                 </form>
 
