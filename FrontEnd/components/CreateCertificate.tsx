@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import { ButtonLink } from '../components/Button';
 import { Container } from '../components/Container';
+import factory_abi from '../utils/factory_abi.json';
+import factory_address from '../utils/factory_address';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Card,
     CardContent,
@@ -12,9 +14,50 @@ import {
     CardTitle,
 } from "./ui/card"
 import { clsx } from 'clsx';
+import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 
 export function CreateCertificate() {
+
+    const [certName, setCertName] = useState('');
+    const [certSymbol, setCertSymbol] = useState('');
+    const [duration, setDuration] = useState(0);
+    const [allYourCert, setAllYourCert] = useState("");
+    const [addr, setAddr] = useState("");
+
+
+    const {address} = useAccount();
+
+
+    const CreateCert = () => {
+        console.log("creating cert")
+    }
+
+    const {config: CreateCertConfig} = usePrepareContractWrite({
+        address: factory_address,
+        abi: factory_abi,
+        functionName: "CreateAccount",
+        args: [certName, certSymbol, duration],
+    })
+
+    const {data: createCertData, isLoading: createCertIsLoading, isError: createCertIsError, write: createCertWrite} = useContractWrite(CreateCertConfig)
+
+
+    const {data: yourCert, isLoading: yourCertIsLoading, isError: yourCertIsError} = useContractRead({
+        address: factory_address,
+        abi: factory_abi,
+        functionName: "getAllCertificates",
+        args: [addr],
+    })
+
+    useEffect(() => {
+
+        setAddr(address || "");
+        // setAllYourCert(yourCert);
+        
+    }, [addr, yourCert])
+
+
     return (
         <Container className="pt-20 pb-16 text-center lg:pt-32">
             <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
@@ -58,6 +101,21 @@ export function CreateCertificate() {
                 </Card> */}
 
             </div>
+
+            <div className='flex flex-col gap-3'>
+                <p>Create certificate form</p>
+                <label htmlFor="cert_name">Certificate Name
+                    <input type="text" className='border rounded-sm' name="cert_name" id="" onChange={(e) => {setCertName(e.target.value)}}/>
+                </label>
+                <label htmlFor="cert_symbol">Certificate Symbol
+                    <input type="text" className='border rounded-sm' name="cert_symbol" id="" onChange={(e) => {setCertSymbol(e.target.value)}} />
+                </label>
+                <label htmlFor="duration">Duration
+                    <input type="number" className='border rounded-sm' name="duration" id="" onChange={(e) => {setDuration(Number(e.target.value))}}/>
+                </label>
+                <button type="submit" onClick={CreateCert}>Create Certificate</button>
+            </div>
+
             <div className="mt-10 flex justify-center space-x-6">
                 <ButtonLink href="/create">Create new certificate</ButtonLink>
                 <ButtonLink
