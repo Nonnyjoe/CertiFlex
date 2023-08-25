@@ -63,7 +63,7 @@ export function IssueCertificate() {
         setConnectedAddr(address || "");
         setSingleAccount(certAddr || "");
         
-    }, [address, connectedAddr])
+    }, [address, certAddr, connectedAddr])
 
 
     return (
