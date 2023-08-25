@@ -34,7 +34,7 @@ export function Institutions() {
         console.log(allAccounts);
 
         
-    }, [AllAccounts])
+    }, [AllAccounts, allAccounts])
 
 
     return (
@@ -52,17 +52,19 @@ export function Institutions() {
                 > 
                     <CardContent>
                     </CardContent>
-                    <CardTitle>Hello</CardTitle>
+                    <CardTitle>Web3Bridge</CardTitle>
                     <CardHeader>Name of Institution</CardHeader>
                 </Card>
                 <Card> 
                     <CardContent>
                     </CardContent>
+                    <CardTitle>Aya Varsity</CardTitle>
                     <CardHeader>Name of Institution</CardHeader>
                 </Card>
                 <Card> 
                     <CardContent>
                     </CardContent>
+                    <CardTitle>Web3 Afrika</CardTitle>
                     <CardHeader>Name of Institution</CardHeader>
                 </Card>
 
