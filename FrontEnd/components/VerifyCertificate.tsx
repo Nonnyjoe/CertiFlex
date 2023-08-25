@@ -8,8 +8,6 @@ import React, { useEffect, useState } from 'react';
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "./ui/card"
@@ -54,7 +52,7 @@ export function VerifyCertificate() {
         setAddr(address || "");
         // setAllYourCert(yourCert);
         
-    }, [addr, yourCert])
+    }, [addr, address, yourCert])
 
 
     return (
@@ -76,27 +74,6 @@ export function VerifyCertificate() {
                 These are the lists of certificates you can verify
             </p>
 
-            <div className={clsx('mx-auto mt-6 max-w-2xl ', 'flex flex-wrap gap-6')}>
-                <Card
-                    className={clsx('')}
-                > 
-                    <CardContent>
-                    </CardContent>
-                    <CardTitle>Hello</CardTitle>
-                    <CardHeader>Certificate of Award</CardHeader>
-                </Card>
-                <Card> 
-                    <CardContent>
-                    </CardContent>
-                    <CardHeader>Certificate of Award</CardHeader>
-                </Card>
-                <Card> 
-                    <CardContent>
-                    </CardContent>
-                    <CardHeader>Certificate of Award</CardHeader>
-                </Card>
-
-            </div>
 
             <div className="mt-10 flex justify-center space-x-6">
                 <ButtonLink href="/create">Create new certificate</ButtonLink>
