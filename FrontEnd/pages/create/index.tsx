@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Hero } from '../../components/Hero';
 import { Header } from '../../components/Header';
+import { CreateCertificate } from '../../components/CreateCertificate';
 
 const Home: NextPage = () => {
     return (
@@ -17,7 +18,7 @@ const Home: NextPage = () => {
             </Head>
             <main>
                 <Header />
-                <Hero />
+                <CreateCertificate />
             </main>
         </div>
     );

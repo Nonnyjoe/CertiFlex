@@ -90,7 +90,7 @@ function MobileNavigation(props: HTMLAttributes<HTMLElement> ) {
                         </div>
                         <nav className="mt-6">
                             <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 ">
-                                <MobileNavItem href="/about">About</MobileNavItem>
+                                <MobileNavItem href="/home">Home</MobileNavItem>
                                 <MobileNavItem href="/create">Create</MobileNavItem>
                                 <MobileNavItem href="/verify">Verify</MobileNavItem>
                                 <MobileNavItem href="/insti">Institutions</MobileNavItem>
@@ -131,7 +131,7 @@ function DesktopNavigation(props: JSX.IntrinsicAttributes & ClassAttributes<HTML
     return (
         <nav {...props}>
             <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur ">
-                <NavItem href="/about">About</NavItem>
+                <NavItem href="/home">Home</NavItem>
                 <NavItem href="/create">Create</NavItem>
                 <NavItem href="/verify">Verify</NavItem>
                 <NavItem href="/insti">Institutions</NavItem>

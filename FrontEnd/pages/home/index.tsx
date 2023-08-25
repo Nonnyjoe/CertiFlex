@@ -17,7 +17,6 @@ const Home: NextPage = () => {
             </Head>
             <main>
                 <Header />
-                <Hero />
             </main>
         </div>
     );
