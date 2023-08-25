@@ -105,7 +105,11 @@ export function IssueCertificate() {
 
                 </div>
                 <div className='flex flex-col gap-3'>
-                    <Button onClick={IssueCert}>Issue Certificate</Button>
+                    <Button onClick={(e) => {
+                        e.preventDefault() ; IssueCert() 
+                        }}>
+                        Issue Certificate</Button>
+                    
                 </div>
             </form>
         </Container>

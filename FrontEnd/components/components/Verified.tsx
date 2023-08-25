@@ -30,18 +30,27 @@ import clsx from 'clsx';
                 <div className=' mx-auto'>
                      <IoIosCheckmarkCircle className='w-8 h-8 mx-auto mt-[30px] text-[#0FA958]' />   
                 <div className={clsx("flex flex-wrap")}>
-                  <h2 className='text-4xl font-semibold'>
+                  <p className='text-baseline'>Name: </p>
+                  <h2 className='text-2xl font-semibold'>
                     {data.Name}
                   </h2>
                   <p className='text-sm'>
                     {data.addr}
                   </p>
-                  <div>
-                    {data.certificateId.toString()}
-                    {data.certificateUri}
-                  </div>
+
+                  <p>
+
                   {data.issuedTime}
+                  </p>
                 </div>
+                  <div className=''>
+                    <p>
+                      {data.certificateId.toString()}
+                    </p>
+                    <p>
+                      {data.certificateUri}
+                    </p>
+                  </div>
                 </div>
           </ModalBody>
         </ModalContent>
