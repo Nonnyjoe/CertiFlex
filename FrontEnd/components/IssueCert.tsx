@@ -17,7 +17,8 @@ import {
     CardTitle,
 } from "./ui/card"
 import { clsx } from 'clsx';
-import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { Address, useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { Block } from 'viem';
 
 
 export function IssueCertificate() {
@@ -25,8 +26,8 @@ export function IssueCertificate() {
     const [userName, setUserName] = useState('');
     const [userAddress, setUserAddress] = useState('');
     const [certURI, setCertURI] = useState('');
-    const [singleAccount, setSingleAccount] = useState("");
-    const [certImage, setCertImage] = useState();
+    const [singleAccount, setSingleAccount] = useState<Address>();
+    const [certImage, setCertImage] = useState<Blob>();
     const [connectedAddr, setConnectedAddr] = useState("");
 
 
@@ -60,8 +61,8 @@ export function IssueCertificate() {
 
     useEffect(() => {
 
-        setConnectedAddr(address || "");
-        setSingleAccount(certAddr || "");
+        setConnectedAddr(address as Address);
+        setSingleAccount(certAddr as Address);
         
     }, [address, certAddr, connectedAddr])
 
@@ -85,7 +86,10 @@ export function IssueCertificate() {
                     <input
                         className="py-2 px-2 border border-blue-950 rounded-lg w-full mb-2"
                         type="file"
-                        onChange={(e) => setCertImage(e.target.files[0])}
+                        onChange={(e) => {
+                            if (!e.target.files) return
+                            setCertImage(e.target.files[0] as Blob)}
+                        }
                     />
                 </label>
                 <button type="submit" onClick={IssueCert}>Issue Certificate</button>
