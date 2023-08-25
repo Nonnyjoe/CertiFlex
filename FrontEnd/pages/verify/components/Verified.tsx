@@ -15,12 +15,12 @@ import clsx from 'clsx';
 
 
   
-  const Verified = ({data, open}: {data: VerifiedCertificateDetails, open : boolean}) => {
+  const Verified = ({data, open, close}: {data: VerifiedCertificateDetails, open : boolean, close:() => void}) => {
 
     
     return (
       <div>
-        <Modal isOpen={open} onClose={() => {open = false}} size='xl' isCentered >
+        <Modal isOpen={open} onClose={close} size='xl' isCentered >
         <ModalOverlay />
         <ModalContent  height='250px' >
           <ModalCloseButton />
@@ -29,26 +29,18 @@ import clsx from 'clsx';
                      <MdLockOutline className='w-[18px] h-[23px] text-[#0FA958]' />
                     <h1 className='w-[220px] mx-auto text-[#0FA958]'>Course Certification Verified</h1>
                 </div>
-                <div className='w-[400px] mx-auto'>
-                     <IoIosCheckmarkCircle className='w-[100px] h-[100px] mx-auto mt-[30px] text-[#0FA958]' />   
+                <div className=' mx-auto'>
+                     <IoIosCheckmarkCircle className='w-8 h-8 mx-auto mt-[30px] text-[#0FA958]' />   
                 <div className={clsx("flex flex-wrap")}>
-                  <div>
+                  <h2 className='text-4xl font-semibold'>
                     {data.Name}
-                  </div>
-                  <div>
-
+                  </h2>
+                  <p className='text-sm'>
                     {data.addr}
-                  </div>
+                  </p>
                   <div>
-
                     {data.certificateId.toString()}
-                  </div>
-                  <div>
-
                     {data.certificateUri}
-                  </div>
-                  <div>
-
                   </div>
                   {data.issuedTime}
                 </div>
