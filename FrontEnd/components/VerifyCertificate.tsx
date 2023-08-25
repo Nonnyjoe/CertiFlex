@@ -33,36 +33,28 @@ export function VerifyCertificate() {
     const [certId, setcertId] = useState("");
     const [certUri, setcertUri] = useState("");
     const [certIssuedTime, setcertIssuedTime] = useState("");
-
+    
     const [verifiedCertificateData, setVerifiedCertificateData] = useState<VerifiedCertificateDetails>();
-
-    type VerifiedCertificateDetails = 
-    { 
-        Name: string, 
-        addr: Address, 
-        certificateId: 0n, 
-        certificateUri: string, 
-        issuedTime: number; 
-    }
-
-
+    
+    
+    
     const {address} = useAccount();
-
-
+    
+    
     const CreateCert = () => {
         console.log("creating cert")
         createCertWrite?.();
     }
-
+    
     const {config: CreateCertConfig} = usePrepareContractWrite({
         address: factory_address,
         abi: factory_abi,
         functionName: "CreateAccount",
         args: [certHash],
     })
-
+    
     const {data: createCertData, isLoading: createCertIsLoading, isError: createCertIsError, write: createCertWrite} = useContractWrite(CreateCertConfig)
-
+    
     // INTEGRATION TO VERIFY A CERTIFICATE USING A CERT HASH
     // it first maes a call to get the address of the company that issued the cert
     // then another call verifies the hash from the company address
@@ -70,7 +62,7 @@ export function VerifyCertificate() {
         console.log("Verifying cert by hash")
         // setVerifiedStatus(true)
         // setErrorStatus(true)
-       
+        
     }
     const {data: getCompanyData, isLoading: getCompanyDataIsLoading, isError: getCompanyDataIsError} = useContractRead({
         address: factory_address,
@@ -83,8 +75,8 @@ export function VerifyCertificate() {
             setChildAddr(data);
         },
     })
-
-
+    
+    
     const {data: certificateData, isLoading: certificateDataIsLoading, isError: certificateDataIsError} = useContractRead({
         address: childAddr ? childAddr : " ",
         abi: child_abi,
@@ -104,18 +96,16 @@ export function VerifyCertificate() {
         functionName: "getAllCertificates",
         args: [addr],
     })
-
+    
     useEffect(() => {
-
-        setAddr(address || "");
-        // setAllYourCert(yourCert);
         
+        setAddr(address || "");
     }, [addr, address, yourCert])
-
-
+    
+    
     return (
         <Container className={clsx("pt-20 pb-16 lg:pt-32")}>
-            {verifiedStatus && <Verified open={isOpen} close={onClose} />}
+            {verifiedStatus && verifiedCertificateData && <Verified open={isOpen} close={onClose} data={verifiedCertificateData} />}
             {ErrorStatus && <ErrorDialog open={isOpen} close={onClose} />}
             <form className={clsx("flex flex-col gap-8 mt-4 px-8 py-8 m-auto bg-zinc-50 shadow-2xl shadow-zinc-200 rounded-lg ring-1 ring-zinc-200 lg:max-w-2xl")}>
                 <h2 className="mx-auto max-w-4xl font-display text-4xl font-medium tracking-tight text-slate-900 ">
@@ -131,35 +121,20 @@ export function VerifyCertificate() {
                         id=""
                         onChange={(e) => { setCertHash(e.target.value); }}
                         className='w-full shadow-inner p-2 px-4 ring-1 ring-zinc-200 rounded-md outline-none bg-zinc-50'
-                    />
+                        />
                 </div>
                 <Button type="button" onClick={(e) =>{e.preventDefault; verifyByHash;  onOpen(); setVerifiedStatus(true)}}>Verify Certificate</Button>
 
-                </form>
-
-                {verifiedCertificateData && 
-                <div className={clsx("flex flex-wrap")}>
-                    <div>
-                        {verifiedCertificateData.Name}
-                    </div>
-                    <div>
-
-                    {verifiedCertificateData.addr}
-                    </div>
-                    <div>
-
-                    {verifiedCertificateData.certificateId.toString()}
-                    </div>
-                    <div>
-
-                    {verifiedCertificateData.certificateUri}
-                    </div>
-                    <div>
-                        
-                    </div>
-                    {verifiedCertificateData.issuedTime}
-                </div>
-                }
+                </form> 
         </Container>
     );
+}
+
+export type VerifiedCertificateDetails = 
+{ 
+    Name: string, 
+    addr: Address, 
+    certificateId: 0n, 
+    certificateUri: string, 
+    issuedTime: number; 
 }

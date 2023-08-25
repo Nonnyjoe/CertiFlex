@@ -10,15 +10,17 @@ import {
 import Image from 'next/image'
 import { MdLockOutline} from 'react-icons/md';
 import { IoIosCheckmarkCircle} from 'react-icons/io';
+import { VerifiedCertificateDetails } from '../../../components/VerifyCertificate';
+import clsx from 'clsx';
 
 
   
-  const Verified = (props: any) => {
+  const Verified = ({data, open}: {data: VerifiedCertificateDetails, open : boolean}) => {
 
     
     return (
       <div>
-        <Modal isOpen={props.open} onClose={props.close} size='xl' isCentered >
+        <Modal isOpen={open} onClose={() => {open = false}} size='xl' isCentered >
         <ModalOverlay />
         <ModalContent  height='250px' >
           <ModalCloseButton />
@@ -29,6 +31,27 @@ import { IoIosCheckmarkCircle} from 'react-icons/io';
                 </div>
                 <div className='w-[400px] mx-auto'>
                      <IoIosCheckmarkCircle className='w-[100px] h-[100px] mx-auto mt-[30px] text-[#0FA958]' />   
+                <div className={clsx("flex flex-wrap")}>
+                  <div>
+                    {data.Name}
+                  </div>
+                  <div>
+
+                    {data.addr}
+                  </div>
+                  <div>
+
+                    {data.certificateId.toString()}
+                  </div>
+                  <div>
+
+                    {data.certificateUri}
+                  </div>
+                  <div>
+
+                  </div>
+                  {data.issuedTime}
+                </div>
                 </div>
           </ModalBody>
         </ModalContent>
