@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { ButtonLink } from '../components/Button';
 import { Container } from '../components/Container';
-import factory_abi from '../utils/factory_abi.json';
-import factory_address from '../utils/factory_address';
+import child_abi from '../utils/child_abi.json';
+// import factory_address from '../utils/factory_address';
 import {shortenHex} from "../utils/ShortenHex";
 
 import React, { useEffect, useState } from 'react';
@@ -18,66 +18,65 @@ import { clsx } from 'clsx';
 import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 
-export function CreateCertificate() {
+export function IssueCertificate() {
 
-    const [certName, setCertName] = useState('');
-    const [certSymbol, setCertSymbol] = useState('');
-    const [duration, setDuration] = useState(0);
+    const [userName, setUserName] = useState('');
+    const [userAddress, setUserAddress] = useState('');
+    const [certURI, setCertURI] = useState('');
     const [singleAccount, setSingleAccount] = useState("");
-    const [addr, setAddr] = useState("");
+    const [connectedAddr, setConnectedAddr] = useState("");
 
 
     const {address} = useAccount();
 
 
-    const CreateCert = () => {
+    const IssueCert = () => {
         console.log("creating cert")
-        createCertWrite?.();
+        issueCertWrite?.();
     }
 
-    const {config: CreateCertConfig} = usePrepareContractWrite({
-        address: factory_address,
-        abi: factory_abi,
-        functionName: "CreateAccount",
-        args: [certName, certSymbol, duration],
+    const {config: IssueCertConfig} = usePrepareContractWrite({
+        address: '0x00',
+        abi: child_abi,
+        functionName: "issueCertificate",
+        args: [userName, userAddress, certURI],
     })
 
-    const {data: createCertData, isLoading: createCertIsLoading, isError: createCertIsError, write: createCertWrite} = useContractWrite(CreateCertConfig)
+    const {data: issueCertData, isLoading: issueCertIsLoading, isError: issueCertIsError, write: issueCertWrite} = useContractWrite(IssueCertConfig)
 
 
-    const {data: singleAcc, isLoading: yourCertIsLoading, isError: yourCertIsError} = useContractRead({
-        address: factory_address,
-        abi: factory_abi,
-        functionName: "SingleAccount",
-        args: [addr ?? "0x00"],
-    })
+    // const {data: yourAccount, isLoading: yourCertIsLoading, isError: yourCertIsError} = useContractRead({
+    //     address: factory_address,
+    //     abi: factory_abi,
+    //     functionName: "SingleAccount",
+    //     args: [addr ?? "0x00"],
+    // })
 
     useEffect(() => {
 
-        setAddr(address || "");
-        console.log(singleAcc);
+        setConnectedAddr(address || "");
         
-    }, [addr, singleAcc])
+    }, [connectedAddr])
 
 
     return (
         <Container className="pt-20 pb-16 text-center lg:pt-32">
             <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
-                Welcome, {shortenHex(addr, 10)}
+                Welcome, {shortenHex(connectedAddr, 10)}
             </h1>
 
             <div className='flex flex-col gap-3'>
-                <p>Create certificate form</p>
-                <label htmlFor="cert_name">Certificate Name
-                    <input type="text" className='border rounded-sm' name="cert_name" id="" onChange={(e) => {setCertName(e.target.value)}}/>
+                <p>Issue certificate form</p>
+                <label htmlFor="userName">User Name
+                    <input type="text" className='border rounded-sm' name="userName" id="" onChange={(e) => {setUserName(e.target.value)}}/>
                 </label>
-                <label htmlFor="cert_symbol">Certificate Symbol
-                    <input type="text" className='border rounded-sm' name="cert_symbol" id="" onChange={(e) => {setCertSymbol(e.target.value)}} />
+                <label htmlFor="userAddress">User Address
+                    <input type="text" className='border rounded-sm' name="userAddress" id="" onChange={(e) => {setUserAddress(e.target.value)}} />
                 </label>
-                <label htmlFor="duration">Duration
-                    <input type="number" className='border rounded-sm' name="duration" id="" onChange={(e) => {setDuration(Number(e.target.value))}}/>
+                <label htmlFor="certURI">Certificate URI
+                    <input type="text" className='border rounded-sm' name="certURI" id="" onChange={(e) => {setCertURI(e.target.value)}}/>
                 </label>
-                <button type="submit" onClick={CreateCert}>Create Certificate</button>
+                <button type="submit" onClick={IssueCert}>Issue Certificate</button>
             </div>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
