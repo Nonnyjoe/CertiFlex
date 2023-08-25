@@ -3,7 +3,7 @@ import { ButtonLink } from '../components/Button';
 import { Container } from '../components/Container';
 import factory_abi from '../utils/factory_abi.json';
 import factory_address from '../utils/factory_address';
-
+import child_abi from '../utils/child_abi.json';
 import React, { useEffect, useState } from 'react';
 import {
     Card,
@@ -19,9 +19,16 @@ import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite 
 
 export function VerifyCertificate() {
 
-    const [certName, setCertHash] = useState('');
+    const [certHash, setCertHash] = useState('');
     const [allYourCert, setAllYourCert] = useState("");
     const [addr, setAddr] = useState("");
+    const [childAddr, setChildAddr] = useState<any>(`0x${'string'}`);
+    const [certOwnerName, setcertOwnerName] = useState("");
+    const [certOwnerAddr, setcertOwnerAddr] = useState("");
+    const [certId, setcertId] = useState("");
+    const [certUri, setcertUri] = useState("");
+    const [certIssuedTime, setcertIssuedTime] = useState("");
+
 
 
     const {address} = useAccount();
@@ -36,12 +43,42 @@ export function VerifyCertificate() {
         address: factory_address,
         abi: factory_abi,
         functionName: "CreateAccount",
-        args: [certName],
+        args: [certHash],
     })
 
     const {data: createCertData, isLoading: createCertIsLoading, isError: createCertIsError, write: createCertWrite} = useContractWrite(CreateCertConfig)
 
+    // INTEGRATION TO VERIFY A CERTIFICATE USING A CERT HASH
+    // it first maes a call to get the address of the company that issued the cert
+    // then another call verifies the hash from the company address
+    let verifyByHash = () => {
+        console.log("Verifying cert by hash")
 
+    }
+    const {data: getCompanyData, isLoading: getCompanyDataIsLoading, isError: getCompanyDataIsError} = useContractRead({
+        address: factory_address,
+        abi: factory_abi,
+        functionName: "verifyCertificates1",
+        watch: true,
+        args: [certHash],
+        onSuccess(data: string) {
+            console.log('Success', getCompanyData)
+            setChildAddr(data);
+        },
+    })
+    const {data: certificateData, isLoading: certificateDataIsLoading, isError: certificateDataIsError} = useContractRead({
+        address: childAddr ? childAddr : " ",
+        abi: child_abi,
+        functionName: "verifyCertificate",
+        watch: true,
+        args: [certHash],
+        onSuccess(data) {
+            console.log('Success', certificateData)
+
+        },
+    })
+
+    // THIS WILL RETURN ALL THE CERTIFICATES A USER HAS
     const {data: yourCert, isLoading: yourCertIsLoading, isError: yourCertIsError} = useContractRead({
         address: factory_address,
         abi: factory_abi,
@@ -66,10 +103,10 @@ export function VerifyCertificate() {
 
             <div className='flex flex-col gap-3'>
                 <p>Verify certificate form</p>
-                <label htmlFor="cert_name">Certificate Hash
-                    <input type="text" className='border rounded-sm' name="cert_name" id="" onChange={(e) => {setCertHash(e.target.value)}}/>
+                <label htmlFor="cert_Hash">Certificate Hash
+                    <input type="text" className='border rounded-sm' name="cert_Hash" id="" onChange={(e) => {setCertHash(e.target.value)}}/>
                 </label>
-                <button type="submit" onClick={CreateCert}>Verify Certificate</button>
+                <button type="submit" onClick={verifyByHash}>Verify Certificate</button>
             </div>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
