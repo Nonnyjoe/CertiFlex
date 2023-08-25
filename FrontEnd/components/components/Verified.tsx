@@ -2,20 +2,18 @@ import {
     Modal,
     ModalOverlay,
     ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
   } from '@chakra-ui/react'
 import Image from 'next/image'
 import { MdLockOutline} from 'react-icons/md';
 import { IoIosCheckmarkCircle} from 'react-icons/io';
-import { VerifiedCertificateDetails } from '../../../components/VerifyCertificate';
+import { VerifiedCertificateDetails } from '../VerifyCertificate';
 import clsx from 'clsx';
 
 
   
-  const Verified = ({data, open, close}: {data: VerifiedCertificateDetails, open : boolean, close:() => void}) => {
+ export const Verified = ({data, open, close}: {data: VerifiedCertificateDetails, open : boolean, close:() => void}) => {
 
     
     return (
@@ -51,5 +49,3 @@ import clsx from 'clsx';
       </div>
     )
   }
-  
-  export default Verified

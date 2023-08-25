@@ -49,7 +49,7 @@ export function CreateCertificate() {
         setAddr(address || "");
         console.log(singleAcc);
         
-    }, [addr, singleAcc])
+    }, [addr, address, singleAcc])
 
 
     return (

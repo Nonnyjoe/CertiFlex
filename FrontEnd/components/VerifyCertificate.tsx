@@ -15,8 +15,8 @@ import { clsx } from 'clsx';
 import { type  Address, useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { Button } from './ui/button';
 import { useDisclosure } from '@chakra-ui/react'
-import Verified from '../pages/verify/components/Verified';
-import ErrorDialog from '../pages/verify/components/Error';
+import  {Verified} from './components/Verified';
+import ErrorDialog from './components/Error';
 
 
 export function VerifyCertificate() {
